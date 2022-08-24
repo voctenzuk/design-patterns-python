@@ -1,2 +1,7 @@
-venv/
+*.py[cod]
+*$py.class
+__pycache__/
+*.code-workspace
 .mypy_cache/
+.vscode/
+*env/
