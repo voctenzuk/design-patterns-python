@@ -17,9 +17,9 @@ class CurrentConditionsDisplay(Observer, DisplayElement):
         self.weather_data = weather_data
         self.weather_data.register_observer(self)
 
-    def update(self, temp: float, humidity: float, pressure: float) -> None:
-        self._temperature = temp
-        self._humidity = humidity
+    def update(self) -> None:
+        self._temperature = self.weather_data.temperature
+        self._humidity = self.weather_data.humidity
         self.display()
 
     def display(self) -> None:
@@ -39,7 +39,8 @@ class StatisticsDisplay(Observer, DisplayElement):
         self.weather_data = weather_data
         self.weather_data.register_observer(self)
 
-    def update(self, temp: float, humidity: float, pressure: float) -> None:
+    def update(self) -> None:
+        temp = self.weather_data.temperature
         self._temp_sum = temp
         self._num_readings += 1
 
@@ -66,9 +67,9 @@ class ForecastDisplay(Observer, DisplayElement):
         self.weather_data = weather_data
         self.weather_data.register_observer(self)
 
-    def update(self, temp: float, humidity: float, pressure: float) -> None:
+    def update(self) -> None:
         self._last_pressure = self._current_pressure
-        self._current_pressure = pressure
+        self._current_pressure = self.weather_data.pressure
         self.display()
 
     def display(self) -> None:

@@ -17,7 +17,7 @@ class Subject(ABC):
 
 class Observer(ABC):
     @abstractmethod
-    def update(self, temp: float, humidity: float, pressure: float) -> None:
+    def update(self) -> None:
         pass
 
 
@@ -30,6 +30,18 @@ class WeatherData(Subject):
     def __init__(self) -> None:
         self._observers: list[Observer] = []
 
+    @property
+    def temperature(self):
+        return self._temperature
+
+    @property
+    def humidity(self):
+        return self._humidity
+
+    @property
+    def pressure(self):
+        return self._pressure
+
     def register_observer(self, observer: Observer) -> None:
         self._observers.append(observer)
 
@@ -38,7 +50,7 @@ class WeatherData(Subject):
 
     def notify_observers(self) -> None:
         for observer in self._observers:
-            observer.update(self._temperature, self._humidity, self._pressure)
+            observer.update()
 
     def measurements_changed(self) -> None:
         self.notify_observers()
